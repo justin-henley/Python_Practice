@@ -28,10 +28,6 @@ namespace justin_a_henley {
     // Precondition: _gameBoard has not been given any values
     // Postcondition:  _gameBoard has been filled
     void GameOfLife::generateBoard() {
-        // todo figure out pointer type
-
-
-
         // Seed the random number generator for the gameBoard
         srand(time(NULL));
 
@@ -53,6 +49,9 @@ namespace justin_a_henley {
             //Add the new row to the vector
             _gameBoard.push_back(row);
         }
+
+        // Duplicate _gameBoard to _prevBoard to set the size correctly
+        _prevBoard = _gameBoard;
     }
 
     // Prints the current gameBoard
@@ -72,12 +71,68 @@ namespace justin_a_henley {
         }
     }
 
+    // Generates the next frame of the gameboard
+    // Precondition: _prevBoard and _gameBoard have both been generated
+    // Postcondition: _prevBoard holds the last frame, and _gameBoard holds the new frame
     void GameOfLife::checkBoard() {
-        return;
+        // Switch _gameBoard to _oldBoard, _gameBoard will overwrite the new frame
+        _gameBoard.swap(_prevBoard);
+
+        // Iterate over each row (height)
+        for (int y = 0; y < _height; y++){
+            // Iterate over each cell in the row
+            for (int x = 0; x < _width; x++){
+                _gameBoard[y][x] = checkCell(y, x);
+            }
+        }
     }
 
+    // Decides if a cell is alive or dead in the next frame
+    // Precondition: yPos and xPos are valid locations within _prevBoard and _gameBoard
+    // Postcondition: returns the state of the cell in the next frame
     char GameOfLife::checkCell(int yPos, int xPos) {
-        return '?';
+        // Track the total number of neighbors
+        int totalNeighbors = 0;
+
+        // Coordinates for the neighbors
+        // Modulo deals with edges, and wraps to the other edge
+        int rightPos = (xPos + 1) % _width;
+        int leftPos = (xPos - 1) % _width;
+        int upPos = (yPos - 1) % _width; // Y-axis goes down to due printing
+        int downPos = (yPos + 1) % _width;
+
+        // Vector of positions allows for looped checks of each neighbor
+        // NOTE also checks the current cell, must be accounted for when deciding status
+        vector<int> xAxis = {leftPos, xPos, rightPos};
+        vector<int> yAxis = {upPos, yPos, downPos};
+
+        // Iterate over yAxis and xAxis and tally neighbors
+        for (int y : yAxis){
+            for (int x : xAxis){
+                if(_prevBoard[y][x] == _liveChar)
+                    totalNeighbors++;
+            }
+        }
+
+        // Decide next state of current cell based on rules and current cell state
+        // Applies if current cell is alive
+        if(_prevBoard[yPos][xPos] == _liveChar){
+            // Middle cell is counted in neighbor tally, and must be removed
+            totalNeighbors--;
+
+            // Decide if live or dead next
+            if ((totalNeighbors == 2) || (totalNeighbors == 3))
+                return _liveChar;
+            else
+                return _deadChar;
+        }
+        // Applies if current cell is dead
+        else{
+            if(totalNeighbors == 3)
+                return _liveChar;
+            else
+                return _deadChar;
+        }
     }
 
     bool GameOfLife::boardAlive() {

@@ -79,7 +79,7 @@ def checkCell(board, xPos, yPos):
     # Track the total number of neighbors
     totalNeighbors = 0
 
-    # Coordinates for the nieghbors
+    # Coordinates for the neighbors
     # Modulo deals with edges, and wraps to the other edge
     rightPos = (xPos + 1) % WIDTH
     leftPos = (xPos - 1) % WIDTH
