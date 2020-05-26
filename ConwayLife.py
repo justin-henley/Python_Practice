@@ -12,6 +12,7 @@ WIDTH = 20
 HEIGHT = 20
 MAX_TURNS = 1000 # Maximum number of turns before a game is ended
 PAUSE_TIME = 0.1 # Pause between printing of frames
+LIVE_RATE = 70 # Out of 100, number of cells alive frequency
 
 
 # Generates a new board of size WIDTH*HEIGHT
@@ -27,7 +28,7 @@ def generateBoard():
         for x in range(WIDTH):
             # Frequency of live cells at start is decided here
             # One site claims 37.5% live is optimal, test this yourself
-            if random.randint(0,100) <= 37:
+            if random.randint(0,100) <= LIVE_RATE:
                 row.append(LIVE_CHAR)
             else:
                 row.append(DEAD_CHAR)
@@ -132,7 +133,7 @@ def boardAlive(board):
 # Runs a single game of Life
 # Displays all frames
 # In: none
-# Out: returns the number of turns the board survived
+# Out: returns the number of turns the board survived, up to MAX_TURNS
 def visibleLife():
     # generate a new board and track turns survived
     board = generateBoard()
@@ -154,12 +155,62 @@ def visibleLife():
     # Return turns survived
     return turns
 
+# Runs a single game of Life
+# WITHOUT displaying the frames
+# In: none
+# Out: returns the number of turns the board survived, up to MAX_TURNS
+def invisibleLife():
+    # generate a new board and track turns survived
+    board = generateBoard()
+    turns = 0
+
+    # Run until board is dead, or MAX_TURNS is reached
+    # Avoids hanging on stable boards
+    while boardAlive(board) and turns < MAX_TURNS:
+        # Update board
+        board = checkBoard(board)
+        # Wait
+        turns += 1
+
+    # Return turns survived
+    return turns
+
+
+# Runs an analysis of lifespans over repeated random games
+# Input: number of games to run for analysis
+# Output: none
+def analyzeLife(numGames):
+    # Variables for tracking
+    sumTurns = 0
+    maxTurns = 0
+    minTurns = MAX_TURNS
+
+    # Runs numGames number of games and record turns survived
+    for round in range(numGames):
+        lifespan = invisibleLife()
+        sumTurns += lifespan
+        # Check if new maximum turns
+        if lifespan > maxTurns:
+            maxTurns = lifespan
+        # Check if new minimum turns
+        if lifespan < minTurns:
+            minTurns = lifespan
+        # Display the lifespan of each round
+        print('Round ' + str(round) + ': ' + str(lifespan) + ' turns')
+
+    # Prints analysis after all games have finished
+    averageTurns = float(sumTurns) / float(numGames)
+    print('\n\n\n')
+    print('Max lifespan: ' + str(maxTurns))
+    print('Min lifespan: ' + str(minTurns))
+    print('Average lifespan: ' + str(averageTurns))
+
 
 # Main program
 def main():
-    # Run a single game of life
-    lifespan = visibleLife()
-    print('Alive for ' + str(lifespan) + ' turns')
+    # Run analysis of numGames number of games
+    numGames = 1000
+    analyzeLife(numGames)
 
 # Begins the program
 main()
