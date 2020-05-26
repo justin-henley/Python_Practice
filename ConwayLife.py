@@ -10,8 +10,22 @@ HEIGHT = 20
 # In: Height and Width
 # Out: Returns a 2D list representing a game board
 def generateBoard():
-    # Stub
-    return empty
+    # Create empty list for the board
+    newBoard = []
+    # Create HEIGHT number of rows
+    for y in range(HEIGHT):
+        row = []
+        # Generates WIDTH cells in each row
+        for x in range(WIDTH):
+            # Frequency of live cells at start is decided here
+            # One site claims 37.5% live is optimal, test this yourself
+            if random.randint(0,100) <= 37:
+                row.append(LIVE_CHAR)
+            else:
+                row.append(DEAD_CHAR)
+
+    #returns the filled board, which must be assigned
+    return newBoard
 
 # Prints the board
 # In: a filled game board
@@ -31,7 +45,7 @@ def checkBoard(gameBoard):
 # Out: Returns LIVE_CHAR or DEAD_CHAR
 def checkCell(board, xpos, ypos):
     # stub
-    return DEAD_CELL
+    return DEAD_CHAR
 
 # Main program
 def main():
