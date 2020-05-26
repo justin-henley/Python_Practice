@@ -44,8 +44,19 @@ def printBoard(gameBoard):
 # In: current game board
 # Out: returns the next frame of the game
 def checkBoard(gameBoard):
-    # stub
-    return empty
+    # Copies the current board, easy than generating a new frame
+    nextBoard = copy.deepcopy(gameBoard)
+
+    # Iterate over each row (the height)
+    for y in range(HEIGHT):
+        # Iterate over each cell in the row (the width)
+        for x in range(WIDTH):
+            # Find the new value for this cell, and
+            # assign it to the same position in the next board
+            nextBoard[y][x] = checkCell(gameBoard, x, y)
+
+    # return the new board, must be assigned
+    return nextBoard
 
 # Decides whether a cell will be live or dead in the next frame
 # In: the current board, and the coordinates of the cell in wuestion
