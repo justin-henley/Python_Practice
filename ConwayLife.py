@@ -10,6 +10,8 @@ LIVE_CHAR = '#'
 DEAD_CHAR = ' '
 WIDTH = 20
 HEIGHT = 20
+MAX_TURNS = 1000 # Maximum number of turns before a game is ended
+PAUSE_TIME = 0.1 # Pause between printing of frames
 
 
 # Generates a new board of size WIDTH*HEIGHT
@@ -125,10 +127,37 @@ def boardAlive(board):
     return False
 
 
+# Runs a single game of Life
+# Displays all frames
+# In: none
+# Out: returns the number of turns the board survived
+def visibleLife():
+    # generate a new board and track turns survived
+    board = generateBoard()
+    turns = 0
+
+    # Run until board is dead, or MAX_TURNS is reached
+    # Avoids hanging on stable boards
+    while boardAlive(board) and turns < MAX_TURNS:
+        # Whitespace to separate frames
+        print('\n\n')
+        # Update board
+        board = checkBoard(board)
+        # Print frame
+        printBoard(board)
+        # Wait
+        time.sleep(PAUSE_TIME)
+        turns += 1
+
+    # Return turns survived
+    return turns
+
+
 # Main program
 def main():
-    #stub
-    print('Hello, world!')
+    # Run a single game of life
+    lifespan = visibleLife()
+    print('Alive for ' + str(lifespan) + ' turns')
 
 # Begins the program
 main()
