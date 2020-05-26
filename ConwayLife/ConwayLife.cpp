@@ -1,57 +1,7 @@
 //
 // Created by justin on 2020-05-26.
 //
-
 #include "ConwayLife.h"
-#include <memory>
-#include <vector>
-#include <iostream>
-#include <cstdlib>
-#include <time.h>
-
-using namespace std;
-
-const int HEIGHT = 20;
-const int WIDTH = 20;
-const double PAUSE_TIME = 0.1;  // Pause time between printing frames
-typedef char* charPtr;
-
-namespace justin_a_henley {
-    class GameOfLife {
-    public:
-        // Constructors
-        GameOfLife();  // Uses default game size
-        GameOfLife(int width, int height, int maxTurns, int liveRate, char liveChar, char deadChar);  // Allows custom specs
-
-        // Destructor TODO
-
-        // Member functions
-        int visibleLife();
-        int invisibleLife();
-
-    private:
-        // Game specs, overridden by non-default constructor
-        int _width = WIDTH;
-        int _height = HEIGHT;
-        int _maxTurns = 1000;  // Maximum number of turns before a game ends
-        int _liveRate = 50;  // Out of 100, percent of cells alive
-        char _liveChar = '#';
-        char _deadChar = ' ';
-
-        // Empty game board list pointer
-        // todo vector<vector<char>> prevBoard;
-        // todo shared_ptr<>> gameBoard;
-        vector<vector<char>> _prevBoard;
-        vector<vector<char>> _gameBoard;
-
-        // private member functions
-        void generateBoard();
-        void printBoard();
-        void checkBoard();
-        char checkCell(int yPos, int xPos);
-        bool boardAlive();
-    };
-}
 
 namespace justin_a_henley {
     GameOfLife::GameOfLife() {
@@ -74,16 +24,13 @@ namespace justin_a_henley {
 
     // Destructor todo
 
+    // Generates the gameboard with the appropriate size and characters
+    // Precondition: _gameBoard has not been given any values
+    // Postcondition:  _gameBoard has been filled
     void GameOfLife::generateBoard() {
         // todo figure out pointer type
 
-        // Resizes the gameboard to spec if not default
-        if ((_height != HEIGHT) || (_width != WIDTH)){
-            _gameBoard.resize(_height);
-            for(int y = 0; y < _height; y++ ){
-                (_gameBoard.at(y)).resize(_width);
-            }
-        }
+
 
         // Seed the random number generator for the gameBoard
         srand(time(NULL));
@@ -91,17 +38,20 @@ namespace justin_a_henley {
         // Generates random values for each cell
         // Iterate over each row
         for(int y = 0; y < _height; y++) {
+            vector<char> row;
             // Iterate over each cell in the row
             for(int x = 0; x < _width; x++) {
                 // A random score between 1 and 100
                 int lifeScore = rand() % 100 + 1;
                 // Decide if score meets life requirements
                 if (lifeScore <= _liveRate)
-                    _gameBoard[y][x] = _liveChar;
+                    row.push_back(_liveChar);
                 else
-                    //_gameBoard[y][x] = _deadChar; todo should be at or []?
-                    (_gameBoard.at(y)).at(x) = _deadChar;
+                    //_gameBoard[y][x] = _deadChar;
+                    row.push_back(_deadChar);
             }
+            //Add the new row to the vector
+            _gameBoard.push_back(row);
         }
     }
 
@@ -109,7 +59,17 @@ namespace justin_a_henley {
     // Precondition:  The board has been generated
     // Postcondition:  The board is printed to std::cout
     void GameOfLife::printBoard() {
-        return;
+        // Iterate over each row in the vector
+        for (int y = 0; y < _height; y++){
+            // Create a string to print out the row
+            string row = "";
+            // Iterate over each cell in the row
+            for (int x = 0; x < _width; x++){
+                row.push_back(_gameBoard[y][x]);
+            }
+            // Print the row
+            cout << row << endl;
+        }
     }
 
     void GameOfLife::checkBoard() {
@@ -125,7 +85,9 @@ namespace justin_a_henley {
     }
 
     int GameOfLife::visibleLife() {
+        printBoard();
         return 0;
+        // todo this is a stub
     }
 
     int GameOfLife::invisibleLife() {
