@@ -1,5 +1,10 @@
 import time, random, copy
 
+# NOTE FOR UNDERSTANDING
+# For the gameboards, represented as 2D lists
+## The first index is the height, the y position
+## The second index is the width, the x position
+
 # Global constants for character representation and board size
 LIVE_CHAR = '#'
 DEAD_CHAR = ' '
@@ -61,9 +66,44 @@ def checkBoard(gameBoard):
 # Decides whether a cell will be live or dead in the next frame
 # In: the current board, and the coordinates of the cell in wuestion
 # Out: Returns LIVE_CHAR or DEAD_CHAR
-def checkCell(board, xpos, ypos):
-    # stub
-    return DEAD_CHAR
+def checkCell(board, xPos, yPos):
+    # Track the total number of neighbors
+    totalNeighbors = 0
+
+    # Coordinates for the nieghbors
+    # Modulo deals with edges, and wraps to the other edge
+    rightPos = (xPos + 1) % WIDTH
+    leftPos = (xPos - 1) % WIDTH
+    upPos = (yPos - 1) % WIDTH  # Y-axis goes down due to printing
+    downPos = (yPos + 1) % WIDTH
+
+    # Lists to allow for looped checks of each neighbors
+    # NOTE also checks the current cell, must be accounted for when deciding next state
+    xAxis = [leftPos, xPos, rightPos]
+    yAxis = [upPos, yPos, downPos]
+
+    # Iterate over xAxis and yAxis and tally neighbors
+    for i in range(len(yAxis)):
+        for j in range(len(xAxis)):
+            if board[yAxis[i]][xAxis[j]] == LIVE_CHAR:
+                totalNeighbors += 1
+
+    # Decide next state of the current cell based on rules and current cell status
+    if board[yPos][xPos] == LIVE_CHAR:
+        # Applies if current cell is alive
+        # Middle cell is counted in neighbor tally, and must be removed
+        totalNeighbors -= 1
+        # Decide live or dead
+        if totalNeighbors == 2 or totalNeighbors == 3:
+            return LIVE_CHAR
+        else:
+            return DEAD_CHAR
+    else:
+        # Applies if current cell is dead
+        if totalNeighbors == 3:
+            return LIVE_CHAR
+        else:
+            return DEAD_CHAR
 
 # Main program
 def main():
