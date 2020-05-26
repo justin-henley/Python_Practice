@@ -11,6 +11,7 @@ DEAD_CHAR = ' '
 WIDTH = 20
 HEIGHT = 20
 
+
 # Generates a new board of size WIDTH*HEIGHT
 # In: Height and Width
 # Out: Returns a 2D list representing a game board
@@ -32,6 +33,7 @@ def generateBoard():
     #returns the filled board, which must be assigned
     return newBoard
 
+
 # Prints the board
 # In: a filled game board
 def printBoard(gameBoard):
@@ -44,6 +46,7 @@ def printBoard(gameBoard):
             rowString += board[y][x]
         #Print the full row
         print(rowString)
+
 
 # Checks the board and generates the next turn's board
 # In: current game board
@@ -62,6 +65,7 @@ def checkBoard(gameBoard):
 
     # return the new board, must be assigned
     return nextBoard
+
 
 # Decides whether a cell will be live or dead in the next frame
 # In: the current board, and the coordinates of the cell in wuestion
@@ -104,6 +108,22 @@ def checkCell(board, xPos, yPos):
             return LIVE_CHAR
         else:
             return DEAD_CHAR
+
+
+# Checks if all cells have died on a board, rendering it dead
+# In: A gameboard
+# Out: returns True if board is alive, False if dead
+def boardAlive(board):
+    # Checks every cell
+    # Returns True on first live cell
+    for y in range(HEIGHT):
+        for x in range(WIDTH):
+            if board[y][x] == LIVE_CHAR:
+                return True
+
+    # If the search never returns true, board is dead
+    return False
+
 
 # Main program
 def main():
