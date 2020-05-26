@@ -31,6 +31,8 @@ def generateBoard():
                 row.append(LIVE_CHAR)
             else:
                 row.append(DEAD_CHAR)
+        # Append the row to the newBoard list
+        newBoard.append(row)
 
     #returns the filled board, which must be assigned
     return newBoard
@@ -45,7 +47,7 @@ def printBoard(gameBoard):
         rowString = ''
         #Iterate over each cell in the row (the width)
         for x in range(WIDTH):
-            rowString += board[y][x]
+            rowString += gameBoard[y][x]
         #Print the full row
         print(rowString)
 
