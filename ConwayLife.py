@@ -30,8 +30,15 @@ def generateBoard():
 # Prints the board
 # In: a filled game board
 def printBoard(gameBoard):
-    # stub
-    print('printBoard incomplete')
+    #Iterate over each row(first index is the height)
+    for y in range(HEIGHT):
+        # Concatenate all values in the row into a string for easy printing
+        rowString = ''
+        #Iterate over each cell in the row (the width)
+        for x in range(WIDTH):
+            rowString += board[y][x]
+        #Print the full row
+        print(rowString)
 
 # Checks the board and generates the next turn's board
 # In: current game board
