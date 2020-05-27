@@ -1,15 +1,18 @@
-//
+// TODO header comments
+// TODO figure out pause command in printing
 // Created by justin on 2020-05-26.
 //
 #include "ConwayLife.h"
 
 namespace justin_a_henley {
+    // Constructor. Uses default game size
     GameOfLife::GameOfLife() {
         // Generate the new game board
         generateBoard();
     }
 
-    GameOfLife::GameOfLife(int width, int height, int maxTurns, int liveRate, char liveChar, char deadChar) {
+    // Constructor. Allows custom specs
+    GameOfLife::GameOfLife(int width, int height, long maxTurns, int liveRate, char liveChar, char deadChar) {
         // Initialize private member variables with arguments
         _width = width;
         _height = height;
@@ -22,7 +25,8 @@ namespace justin_a_henley {
         generateBoard();
     }
 
-    GameOfLife::GameOfLife(int width, int height, int maxTurns, int liveRate){
+    // Constructor. Allows custom specs for an expected invisible game
+    GameOfLife::GameOfLife(int width, int height, long maxTurns, int liveRate){
         // Initialize private member variables with arguments
         _width = width;
         _height = height;
@@ -37,9 +41,6 @@ namespace justin_a_henley {
     // Precondition: _gameBoard has not been given any values
     // Postcondition:  _gameBoard has been filled
     void GameOfLife::generateBoard() {
-        // Seed the random number generator for the gameBoard
-        //srand(time(NULL));
-
         // Generates random values for each cell
         // Iterate over each row
         for(int y = 0; y < _height; y++) {

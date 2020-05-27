@@ -4,7 +4,7 @@
 using namespace std;
 using namespace justin_a_henley;
 
-void analyzeLife(int numGames, int width, int height, int maxTurns, int liveRate);
+void analyzeLife(long numGames, int width, int height, long maxTurns, int liveRate);
 
 int main() {
     // Seed the random number generator once
@@ -13,18 +13,26 @@ int main() {
     cout << "Hello, World!" << endl;
     GameOfLife newGame;
     int t1 = newGame.visibleLife();
-    cout << "\n\nTurns = " << t1;
+    cout << "\n\nTurns = " << t1 << endl;
 
     GameOfLife visibleGame(10, 10, 500, 37, '@', '-');
     int t2 = visibleGame.visibleLife();
-    cout << "\n\nTurns = " << t2;
+    cout << "\n\nTurns = " << t2 << endl;
 
-    analyzeLife(100, 20, 20, 10000, 80);
+    // TODO loop the analysis request for repeated use
+    // TODO Clean up interface
+
+    // Variables for storing request
+    int width, height, liveRate;
+    long maxTurns, numGames;
+    cout << "Enter values separated by spaces:" << endl << "Width, height, maximum turns, live rate, number of games" << endl;
+    cin >> width >> height >> maxTurns >> liveRate >> numGames;
+    analyzeLife(numGames, width, height, maxTurns, liveRate);
 }
 
 // Runs an analysis of lifespans over repeated random games
 // todo should be a class inheriting?
-void analyzeLife(int numGames, int width, int height, int maxTurns, int liveRate){
+void analyzeLife(long numGames, int width, int height, long maxTurns, int liveRate){
     // Variables for tracking
     long sumTurns = 0;
     long maxLifespan = 0;
