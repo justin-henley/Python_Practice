@@ -16,10 +16,7 @@
 
 using namespace std;
 
-const int HEIGHT = 20;
-const int WIDTH = 20;
 const double PAUSE_TIME = 0.1;  // Pause time between printing frames
-typedef char* charPtr;
 
 namespace justin_a_henley {
     class GameOfLife {
@@ -27,8 +24,7 @@ namespace justin_a_henley {
         // Constructors
         GameOfLife();  // Uses default game size
         GameOfLife(int width, int height, int maxTurns, int liveRate, char liveChar, char deadChar);  // Allows custom specs
-
-        // Destructor TODO
+        GameOfLife(int width, int height, int maxTurns, int liveRate);
 
         // Member functions
         int visibleLife();
@@ -36,16 +32,14 @@ namespace justin_a_henley {
 
     private:
         // Game specs, overridden by non-default constructor
-        int _width = WIDTH;
-        int _height = HEIGHT;
+        int _width = 20; // Default board width
+        int _height = 20; // Default board height
         int _maxTurns = 1000;  // Maximum number of turns before a game ends
         int _liveRate = 50;  // Out of 100, percent of cells alive
         char _liveChar = '#';
         char _deadChar = ' ';
 
         // Empty game board list pointer
-        // todo vector<vector<char>> prevBoard;
-        // todo shared_ptr<>> gameBoard;
         vector<vector<char>> _prevBoard;
         vector<vector<char>> _gameBoard;
 
