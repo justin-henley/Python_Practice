@@ -38,7 +38,7 @@ namespace justin_a_henley {
     // Postcondition:  _gameBoard has been filled
     void GameOfLife::generateBoard() {
         // Seed the random number generator for the gameBoard
-        srand(time(NULL));
+        //srand(time(NULL));
 
         // Generates random values for each cell
         // Iterate over each row

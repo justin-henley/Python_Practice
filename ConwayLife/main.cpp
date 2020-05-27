@@ -7,6 +7,9 @@ using namespace justin_a_henley;
 void analyzeLife(int numGames, int width, int height, int maxTurns, int liveRate);
 
 int main() {
+    // Seed the random number generator once
+    srand(time(NULL));
+
     cout << "Hello, World!" << endl;
     GameOfLife newGame;
     int t1 = newGame.visibleLife();
