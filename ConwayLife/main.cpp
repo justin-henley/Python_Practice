@@ -4,12 +4,19 @@
 using namespace std;
 using namespace justin_a_henley;
 
+// Runs the arguments for numGames rounds of Life, and displays statistics
+// Precondition:  The arguments are all positive non-zero numbers
 void analyzeLife(long numGames, int width, int height, long maxTurns, int liveRate);
 
+// Displays the main menu for the user and prompts for input
+// Postcondition: Returns the menu choice as an integer
 int menu();
 
+// Handles input for a custom game of life
+// Postcondition: Returns a game of Life as specified by the user
 GameOfLife customInput();
 
+// Handles input for analysis over a repeated series of Life games
 void analysisInput();
 
 int main() {
@@ -55,7 +62,8 @@ int main() {
 }
 
 // Runs an analysis of lifespans over repeated random games
-// todo should be a class inheriting?
+// Precondition:  The arguments are all positive non-zero numbers
+// Could later be created to store results in an array and allow for more statistics
 void analyzeLife(long numGames, int width, int height, long maxTurns, int liveRate){
     // Variables for tracking
     long sumTurns = 0;
@@ -88,6 +96,8 @@ void analyzeLife(long numGames, int width, int height, long maxTurns, int liveRa
     cout << "Avg lifespan: " << averageTurns << endl;
 }
 
+// Displays the main menu for the user and prompts for input
+// Postcondition: Returns the menu choice as an integer
 int menu(){
     cout << "\n Conway's Game of Life:";
     cout << "\n1. Run a default game";
@@ -102,6 +112,8 @@ int menu(){
 
 }
 
+// Handles input for a custom game of life
+// Postcondition: Returns a game of Life as specified by the user
 GameOfLife customInput(){
     // variables for creating new GameOfLife object
     // Would be safer with regex and prompting for single variables, but fast this way for practice
@@ -120,6 +132,7 @@ GameOfLife customInput(){
     return customLife;
 }
 
+// Handles input for analysis over a repeated series of Life games
 void analysisInput(){
     // variables for creating new GameOfLife object
     // Would be safer with regex and prompting for single variables, but fast this way for practice
