@@ -12,12 +12,14 @@
 #include <vector>
 #include <iostream>
 #include <cstdlib>
-#include <time.h>
 #include <string>
+#include <chrono>
+#include <thread>
+#include <ctime>
 
 using namespace std;
-
-const double PAUSE_TIME = 0.1;  // Pause time between printing frames
+using namespace std::this_thread;
+using namespace std::chrono;
 
 namespace justin_a_henley {
     class GameOfLife {

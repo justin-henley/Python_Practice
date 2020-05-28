@@ -1,8 +1,10 @@
 // TODO header comments
-// TODO figure out pause command in printing
 // Created by justin on 2020-05-26.
 //
 #include "ConwayLife.h"
+
+// The sleep time between printing frames in a visible life game
+#define SLEEP 500ms
 
 namespace justin_a_henley {
     // Constructor. Uses default game size
@@ -180,7 +182,7 @@ namespace justin_a_henley {
             // Update board
             checkBoard();
             // Wait
-            // TODO figure out a pause command
+            sleep_for(SLEEP);
             turns++;
         }
         // Returns number of turns survived
