@@ -109,8 +109,8 @@ namespace justin_a_henley {
         // all positions add _width to avoid negative numbers. Handled by the modulo
         int rightPos = (xPos + _width + 1) % _width;
         int leftPos = (xPos + _width - 1) % _width;
-        int upPos = (yPos + _width - 1) % _width; // Y-axis goes down to due printing
-        int downPos = (yPos + _width + 1) % _width;
+        int upPos = (yPos + _height - 1) % _height; // Y-axis goes down to due printing
+        int downPos = (yPos + _height + 1) % _height;
 
         // Vector of positions allows for looped checks of each neighbor
         // NOTE also checks the current cell, must be accounted for when deciding status

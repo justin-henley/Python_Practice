@@ -10,7 +10,7 @@ LIVE_CHAR = '#'
 DEAD_CHAR = ' '
 WIDTH = 20
 HEIGHT = 20
-MAX_TURNS = 1000 # Maximum number of turns before a game is ended
+MAX_TURNS = 10000 # Maximum number of turns before a game is ended
 PAUSE_TIME = 1 # Pause between printing of frames
 LIVE_RATE = 37 # Out of 100, number of cells alive frequency
 
@@ -209,10 +209,10 @@ def analyzeLife(numGames):
 # Main program
 def main():
     # Run analysis of numGames number of games
-    numGames = 1000
+    numGames = 100000
     analyzeLife(numGames)
 
 # Begins the program
-#main()
+main()
 
-visibleLife()
+#visibleLife()
