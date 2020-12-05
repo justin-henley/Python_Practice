@@ -6,13 +6,13 @@ import time, random, copy
 ## The second index is the width, the x position
 
 # Global constants for character representation and board size
-LIVE_CHAR = '#'
+LIVE_CHAR = '.'
 DEAD_CHAR = ' '
-WIDTH = 20
-HEIGHT = 20
+WIDTH = 120
+HEIGHT = 30
 MAX_TURNS = 10000 # Maximum number of turns before a game is ended
-PAUSE_TIME = 1 # Pause between printing of frames
-LIVE_RATE = 37 # Out of 100, number of cells alive frequency
+PAUSE_TIME = .1 # Pause between printing of frames
+LIVE_RATE = 37 # Out of 100, number of cells alive frequency,37 best
 
 
 # Generates a new board of size WIDTH*HEIGHT
@@ -83,8 +83,8 @@ def checkCell(board, xPos, yPos):
     # Modulo deals with edges, and wraps to the other edge
     rightPos = (xPos + 1) % WIDTH
     leftPos = (xPos - 1) % WIDTH
-    upPos = (yPos - 1) % WIDTH  # Y-axis goes down due to printing
-    downPos = (yPos + 1) % WIDTH
+    upPos = (yPos - 1) % HEIGHT  # Y-axis goes down due to printing
+    downPos = (yPos + 1) % HEIGHT
 
     # Lists to allow for looped checks of each neighbors
     # NOTE also checks the current cell, must be accounted for when deciding next state
@@ -135,6 +135,10 @@ def boardAlive(board):
 # In: none
 # Out: returns the number of turns the board survived, up to MAX_TURNS
 def visibleLife():
+    # fix to clear terminal between frames
+    import os
+    
+
     # generate a new board and track turns survived
     board = generateBoard()
     turns = 0
@@ -147,6 +151,7 @@ def visibleLife():
         # Update board
         board = checkBoard(board)
         # Print frame
+        os.system('cls' if os.name == 'nt' else 'clear')
         printBoard(board)
         # Wait
         time.sleep(PAUSE_TIME)
@@ -209,8 +214,11 @@ def analyzeLife(numGames):
 # Main program
 def main():
     # Run analysis of numGames number of games
-    numGames = 100000
-    analyzeLife(numGames)
+    #numGames = 100000
+    #analyzeLife(numGames)
+
+    # Play a visible round
+    visibleLife()
 
 # Begins the program
 main()
